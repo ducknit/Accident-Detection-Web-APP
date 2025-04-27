@@ -8,15 +8,20 @@ import random
 import time
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+import telebot
 
-model_json_file = r"D:\code\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\model.json"
-model_weights_file = r"D:\code\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\model_weights.h5"
+model_json_file = r"D:\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\model.json"
+model_weights_file = r"D:\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\model_weights.h5"
+
+# bot_token = "6464904338:AAGZgrNECVisxgKryybFkqZ530bMU9FgIiI"  # Update with your Telegram bot token
+# chat_id = "1210549392"  # Update with your Telegram chat ID
+
 
 # Function to authenticate with Google Sheets API
 def authenticate_google_sheets():
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
     credentials = service_account.Credentials.from_service_account_file(
-        r"D:\code\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\graph-388510-b8eef180584d.json",  # Update with your service account JSON file path
+        r"D:\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\graph-388510-b8eef180584d.json",  # Update with your service account JSON file path
         scopes=scopes
     )
     service = build('sheets', 'v4', credentials=credentials)
@@ -37,6 +42,15 @@ def write_to_google_sheet(service, spreadsheet_id, range_name, data):
 
     except Exception as e:
         print("An error occurred while writing to Google Sheet:", e)
+
+
+# def send_telegram_message(bot, chat_id, message):
+#     try:
+#         bot.send_message(chat_id, message)
+#     except Exception as e:
+#         print("An error occurred while sending Telegram message:", e)
+
+# bot = telebot.TeleBot(bot_token)
 
 # Function to start application
 def start_application(video_path, save_directory, spreadsheet_id, range_name):
@@ -144,8 +158,8 @@ def start_application(video_path, save_directory, spreadsheet_id, range_name):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    video_path = r"D:\code\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\Demo2.mp4"  # Update with your video file path
-    save_directory = r"D:\code\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\accident detected"  # Update with your save directory
+    video_path = r"D:\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\Demo2.mp4"  # Update with your video file path
+    save_directory = r"D:\Karnataka_project\Accident-Detection-System-main\Accident-Detection-System-main\accident detected"  # 
     spreadsheet_id = "1Bd0BkDw0fzBD1tB2f6WvpE4E6UxG_hADqY6o650i7cA"  # Update with your spreadsheet ID
     range_name = "Sheet1!A:H"  # Update with the correct sheet name and range
     start_application(video_path, save_directory, spreadsheet_id, range_name)
